@@ -84,4 +84,5 @@ void button_simulate_event(uint8_t numer, Button_event_e event_type );
 //! wprowadzenia urzadzenia w tryb serwisowy itp
 uint8_t buttons_is_button_pressed( uint8_t numer );
 
+
 #endif
