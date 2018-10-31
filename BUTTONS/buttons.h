@@ -80,4 +80,8 @@ void buttons_reset_counters( uint8_t numer );
 //! lub zrobic w latwy sposob "demo" pokazowe poszczegolnych funkcji
 void button_simulate_event(uint8_t numer, Button_event_e event_type );
 
+//! sprawdzenie, czy przycisk jest aktualnie wcisniety - mozna wykorzystywac np przed uruchomieniem timerow w celu
+//! wprowadzenia urzadzenia w tryb serwisowy itp
+uint8_t buttons_is_button_pressed( uint8_t numer );
+
 #endif

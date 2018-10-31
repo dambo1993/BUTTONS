@@ -376,3 +376,88 @@ void buttons_check_states_and_run_callbacks()
 	buttons_check_events();
 	buttons_callbacks();
 }
+
+//! sprawdzenie, czy przycisk jest aktualnie wcisniety - mozna wykorzystywac np przed uruchomieniem timerow w celu
+//! wprowadzenia urzadzenia w tryb serwisowy itp
+uint8_t buttons_is_button_pressed( uint8_t numer )
+{
+	if(numer > BUTTONS_NUMBER )
+	{
+		return 0;
+	}
+
+	switch(numer)
+	{
+		#if BUTTONS_NUMBER >= 1
+		case 0:
+		{
+			if( BUTTON1_IS_LOW )
+			{
+				return 0;
+			}
+			else
+			{
+				return 1;
+			}
+		}
+		#endif
+		#if BUTTONS_NUMBER >= 2
+		case 1:
+		{
+			if( BUTTON2_IS_LOW )
+			{
+				return 0;
+			}
+			else
+			{
+				return 1;
+			}
+		}
+		#endif
+		#if BUTTONS_NUMBER >= 3
+		case 2:
+		{
+			if( BUTTON3_IS_LOW )
+			{
+				return 0;
+			}
+			else
+			{
+				return 1;
+			}
+		}
+		#endif
+		#if BUTTONS_NUMBER >= 4
+		case 3:
+		{
+			if( BUTTON4_IS_LOW )
+			{
+				return 0;
+			}
+			else
+			{
+				return 1;
+			}
+		}
+		#endif
+		#if BUTTONS_NUMBER >= 5
+		case 4:
+		{
+			if( BUTTON5_IS_LOW )
+			{
+				return 0;
+			}
+			else
+			{
+				return 1;
+			}
+		}
+		#endif
+
+		default:
+		{
+			return 0;
+		}
+	}
+	return 0;
+}
