@@ -30,7 +30,6 @@ typedef struct BUTTON_settings{
 	button_Callback_type* release_function;
 }BUTTON_settings;
 
-
 //! struktura przechowujaca same callbacki - do ich latwiejszej podmiany
 typedef struct BUTTON_callbacks{
 	button_Callback_type* push_function;
@@ -51,27 +50,39 @@ typedef enum Button_event_e{
 void init_buttons();
 
 //! inicjalizacja pojedynczego przycisku w "starym stylu" dla kompatybilnosci kodow
-void button_init( uint8_t numer, uint8_t debounce_time_high, uint16_t debounce_time_low, uint16_t long_push_time,uint16_t repeat_time, button_Callback_type* push_function,button_Callback_type* push_long_function, button_Callback_type* repeat_function, button_Callback_type* release_function );
+void button_init( uint8_t numer,
+		uint8_t debounce_time_high,
+		uint16_t debounce_time_low,
+		uint16_t long_push_time,
+		uint16_t repeat_time,
+		const button_Callback_type* push_function,
+		const button_Callback_type* push_long_function, const
+		const button_Callback_type* repeat_function,
+		const button_Callback_type* release_function );
 
 //! podmienienie callbackow dla okreslonego przycisku w "starym stylu" dla kompatybilnosci kodow
-void button_change_callbacks(uint8_t numer, button_Callback_type* push_function,button_Callback_type* push_long_function, button_Callback_type* repeat_function, button_Callback_type* release_function );
+void button_change_callbacks(uint8_t numer,
+		const button_Callback_type* push_function,
+		const button_Callback_type* push_long_function,
+		const button_Callback_type* repeat_function,
+		const button_Callback_type* release_function );
 
 //! inicjalizacja pojedynczego przycisku
-void button_init_with_struct(uint8_t numer, BUTTON_settings *btn);
+void button_init_with_struct(uint8_t numer, const BUTTON_settings *btn);
 
 //! podmiana callbackow dla przycisku
-void button_change_callbacks_with_struct(uint8_t numer, BUTTON_callbacks *btn_cb);
+void button_change_callbacks_with_struct(uint8_t numer, const BUTTON_callbacks *btn_cb);
 
 
 //! poczatkowe poedjscie z mozliwoscia robienia roznych rzeczy na roznych poziomach przerwan - potem zaniechane, zalecane jest uzywanie funkcji "button_check_states_and_run_callbacks"
 //! ale mozliwosc zostawiona dla kompatybilnosci starszych projektow
-void buttons_check_states();
-void buttons_check_events();
-void buttons_callbacks();
+void buttons_check_states(void);
+void buttons_check_events(void);
+void buttons_callbacks(void);
 
 //! funkcja "all-in-one" - poniewaz wczesniejsza koncepcja wywolywaniem funkcji na roznych poziomach przerwan moze spowodowac problemy z atomowoscia dostepu do zmiennych
 //! ta wersja robi wszystko na tym samym poziomie - do wywolywania cyklicznie co ustalony interwal
-void buttons_check_states_and_run_callbacks();
+void buttons_check_states_and_run_callbacks(void);
 
 //! wyzerowanie licznikow przyciskow
 void buttons_reset_counters( uint8_t numer );

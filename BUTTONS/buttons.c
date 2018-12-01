@@ -15,7 +15,7 @@
 // flaga od pobrania nowego stanu przyciskow
 static volatile uint8_t buttons_flag = 0;
 
-// przyjalem zasade, ze funkcja release moze wystapic tylko wtedy, kiedy jestesmy po dlugim przytrzymaniu
+// przyjalem zasade, ze funkcja release moze wystapic tylko wtedy, kiedy jestesmy po dlugim przytrzymaniu, nie po krotkim
 typedef struct
 {
 	// zmienne "wewnetrzne"
@@ -53,7 +53,15 @@ typedef struct
 
 static BUTTON buttons_array[ BUTTONS_NUMBER ];
 
-void button_init( uint8_t numer, uint8_t debounce_time_high, uint16_t debounce_time_low, uint16_t long_push_time,uint16_t repeat_time, button_Callback_type* push_function,button_Callback_type* push_long_function, button_Callback_type* repeat_function, button_Callback_type* release_function )
+void button_init( uint8_t numer,
+		uint8_t debounce_time_high,
+		uint16_t debounce_time_low,
+		uint16_t long_push_time,
+		uint16_t repeat_time,
+		const button_Callback_type* push_function,
+		const button_Callback_type* push_long_function, const
+		const button_Callback_type* repeat_function,
+		const button_Callback_type* release_function )
 {
 	// variables:
 	buttons_array[numer].debounce_time_high 	= debounce_time_high;
@@ -77,7 +85,7 @@ void button_init( uint8_t numer, uint8_t debounce_time_high, uint16_t debounce_t
 	buttons_array[numer].events_clear	= 0;
 }
 
-void button_init_with_struct(uint8_t numer, BUTTON_settings *btn)
+void button_init_with_struct(uint8_t numer, const BUTTON_settings *btn)
 {
 	// variables:
 	buttons_array[numer].debounce_time_high 	= btn->debounce_time_high;
@@ -101,7 +109,11 @@ void button_init_with_struct(uint8_t numer, BUTTON_settings *btn)
 	buttons_array[numer].events_clear	= 0;
 }
 
-void button_change_callbacks(uint8_t numer, button_Callback_type* push_function,button_Callback_type* push_long_function, button_Callback_type* repeat_function, button_Callback_type* release_function )
+void button_change_callbacks(uint8_t numer,
+		const button_Callback_type* push_function,
+		const button_Callback_type* push_long_function,
+		const button_Callback_type* repeat_function,
+		const button_Callback_type* release_function )
 {
 	// callbacks:
 	if(numer < BUTTONS_NUMBER)
@@ -113,7 +125,7 @@ void button_change_callbacks(uint8_t numer, button_Callback_type* push_function,
 	}
 }
 
-void button_change_callbacks_with_struct(uint8_t numer, BUTTON_callbacks *btn_cb)
+void button_change_callbacks_with_struct(uint8_t numer, const BUTTON_callbacks *btn_cb)
 {
 	// callbacks:
 	if(numer < BUTTONS_NUMBER)
@@ -156,7 +168,7 @@ void init_buttons()
 
 
 //! sprawdzenie eventow i wykonanie ewentualnych callbackow
-void buttons_callbacks()
+void buttons_callbacks(void)
 {
 	// dla kazdego przycisku
 	for( uint8_t i = 0; i < BUTTONS_NUMBER; i++ )
@@ -216,7 +228,7 @@ void buttons_callbacks()
 }
 
 //! weryfikacja eventow i zapalenie ich flag
-void buttons_check_events()
+void buttons_check_events(void)
 {
 	BUTTON * actual_button;
 
@@ -294,7 +306,7 @@ void buttons_check_events()
 }
 
 // funkcja sprawdzajaca stany wszystkich przyciskow
-void buttons_check_states()
+void buttons_check_states(void)
 {
 #if BUTTONS_NUMBER >= 1
 	if( BUTTON1_IS_LOW )
@@ -370,7 +382,7 @@ void button_simulate_event(uint8_t numer, Button_event_e event_type )
 
 //! funkcja "all-in-one" - poniewaz wczesniejsza koncepcja wywolywaniem funkcji na roznych poziomach przerwan moze spowodowac problemy z atomowoscia dostepu do zmiennych
 //! ta wersja robi wszystko na tym samym poziomie - do wywolywania cyklicznie co ustalony interwal
-void buttons_check_states_and_run_callbacks()
+void buttons_check_states_and_run_callbacks(void)
 {
 	buttons_check_states();
 	buttons_check_events();
