@@ -9,7 +9,6 @@
 #include "buttons.h"
 #include <libs_config/buttons_settings.h>
 #include BUTTONS_SYSTEM_INCLUDE
-#include BUTTONS_CB_EFFECT_INCLUDE
 #include BUTTONS_DEBUG_LIBRARY_INCLUDE
 
 // flaga od pobrania nowego stanu przyciskow
@@ -51,7 +50,10 @@ typedef struct
 	button_Callback_type *repeat_function;
 } BUTTON;
 
+//! glowna tablica z przyciskami
 static BUTTON buttons_array[ BUTTONS_NUMBER ];
+
+static button_effect_callback_t button_effect_callback;
 
 void button_init( uint8_t numer,
 		uint8_t debounce_time_high,
@@ -107,6 +109,11 @@ void button_init_with_struct(uint8_t numer, const BUTTON_settings *btn)
 
 	buttons_array[numer].events 		= 0;
 	buttons_array[numer].events_clear	= 0;
+}
+
+void button_register_universal_efect_callback(button_effect_callback_t effect)
+{
+	button_effect_callback = effect;
 }
 
 void button_change_callbacks(uint8_t numer,
@@ -166,6 +173,14 @@ void init_buttons()
 #endif
 }
 
+//! wywolanie uniwersalnej akcji od eventu z przycisku
+static inline void buttons_call_effect_callback(void)
+{
+	if(button_effect_callback)
+	{
+		button_effect_callback();
+	}
+}
 
 //! sprawdzenie eventow i wykonanie ewentualnych callbackow
 void buttons_callbacks(void)
@@ -187,7 +202,7 @@ void buttons_callbacks(void)
 				if(buttons_array[i].push_function)
 				{
 					buttons_array[i].push_function();
-					BUTTONS_CB_EFFECT;
+					buttons_call_effect_callback();
 				}
 			}
 			if(events & event_typ_release)
@@ -198,7 +213,7 @@ void buttons_callbacks(void)
 				if(buttons_array[i].release_function)
 				{
 					buttons_array[i].release_function();
-					BUTTONS_CB_EFFECT;
+					buttons_call_effect_callback();
 				}
 			}
 			if(events & event_typ_long)
@@ -209,7 +224,7 @@ void buttons_callbacks(void)
 				if(buttons_array[i].push_long_function)
 				{
 					buttons_array[i].push_long_function();
-					BUTTONS_CB_EFFECT;
+					buttons_call_effect_callback();
 				}
 			}
 			if(events & event_typ_repeat)
@@ -220,7 +235,7 @@ void buttons_callbacks(void)
 				if(buttons_array[i].repeat_function)
 				{
 					buttons_array[i].repeat_function();
-					BUTTONS_CB_EFFECT;
+					buttons_call_effect_callback();
 				}
 			}
 		}

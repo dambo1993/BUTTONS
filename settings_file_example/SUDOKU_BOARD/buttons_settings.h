@@ -15,13 +15,6 @@
 
 #define BUTTONS_DEBUG_LIBRARY_INCLUDE "DMB/debug.h"
 
-//! biblioteka zawierajaca funkcje wykonujaca efekt przy wcisnieciu przycisku
-#define BUTTONS_CB_EFFECT_INCLUDE "stm32f0xx.h"
-
-//! co ma sie wykonywac dodatkowo przy wcisnieciu przycisku - np buzzer, migniecie diodka itp
-#define BUTTONS_CB_EFFECT
-
-
 //! ilosc wykorzystywanych przyciskow
 #define BUTTONS_NUMBER 5
 

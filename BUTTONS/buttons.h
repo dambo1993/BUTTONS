@@ -12,9 +12,8 @@
 #include BUTTONS_SYSTEM_INCLUDE
 #include BUTTONS_DEBUG_LIBRARY_INCLUDE
 
-
 // utworzenie typu callbacka od eventu przycisku
-typedef void (button_Callback_type)();
+typedef void (button_Callback_type)(void);
 
 //! struktura inicjalizacyjna przycisku
 typedef struct BUTTON_settings{
@@ -38,6 +37,10 @@ typedef struct BUTTON_callbacks{
 	button_Callback_type* release_function;
 }BUTTON_callbacks;
 
+//! callback dla ogolnego efektu od wcisniecia przycisku (ale tylko wtedy, kiedy mamy do wykonania jakas akcje)
+//! mozna pod to dac jakas diodke/buzzerek dla informowania uzytkownika
+typedef void (*button_effect_callback_t)(void);
+
 // Enum dla okreslenia typu eventu
 typedef enum Button_event_e{
 	event_typ_push 		= 0x01,
@@ -48,6 +51,9 @@ typedef enum Button_event_e{
 
 //! inicjalizacja GPIO dla przyciskow - na podstawie danych z pliku ustawien
 void init_buttons();
+
+//! przypisanie callbacka wywolywanego zawsze przy obslugiwanym evencie
+void button_register_universal_efect_callback(button_effect_callback_t effect);
 
 //! inicjalizacja pojedynczego przycisku w "starym stylu" dla kompatybilnosci kodow
 void button_init( uint8_t numer,
