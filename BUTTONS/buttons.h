@@ -91,7 +91,7 @@ void buttons_callbacks(void);
 void buttons_check_states_and_run_callbacks(void);
 
 //! wyzerowanie licznikow przyciskow
-void buttons_reset_counters( uint8_t numer );
+void button_reset_counters( uint8_t numer );
 
 //! zasymulowanie eventu na zadanym przycisku - dzieki temu mozna "automatycznie" testowac przebiegi przechodzenia po aplikacji
 //! lub zrobic w latwy sposob "demo" pokazowe poszczegolnych funkcji
