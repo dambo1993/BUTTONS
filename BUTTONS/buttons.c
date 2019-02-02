@@ -122,7 +122,6 @@ void button_change_callbacks(uint8_t numer,
 		const button_Callback_type* repeat_function,
 		const button_Callback_type* release_function )
 {
-	// callbacks:
 	if(numer < BUTTONS_NUMBER)
 	{
 		buttons_array[numer].push_function 			= push_function;
@@ -134,7 +133,6 @@ void button_change_callbacks(uint8_t numer,
 
 void button_change_callbacks_with_struct(uint8_t numer, const BUTTON_callbacks *btn_cb)
 {
-	// callbacks:
 	if(numer < BUTTONS_NUMBER)
 	{
 		buttons_array[numer].push_function 			= btn_cb->push_function;
@@ -143,7 +141,6 @@ void button_change_callbacks_with_struct(uint8_t numer, const BUTTON_callbacks *
 		buttons_array[numer].repeat_function 		= btn_cb->repeat_function;
 	}
 }
-
 
 void init_buttons()
 {
@@ -201,8 +198,8 @@ void buttons_callbacks(void)
 
 				if(buttons_array[i].push_function)
 				{
-					buttons_array[i].push_function();
 					buttons_call_effect_callback();
+					buttons_array[i].push_function();
 				}
 			}
 			if(events & event_typ_release)
@@ -212,8 +209,8 @@ void buttons_callbacks(void)
 
 				if(buttons_array[i].release_function)
 				{
-					buttons_array[i].release_function();
 					buttons_call_effect_callback();
+					buttons_array[i].release_function();
 				}
 			}
 			if(events & event_typ_long)
@@ -223,8 +220,8 @@ void buttons_callbacks(void)
 
 				if(buttons_array[i].push_long_function)
 				{
-					buttons_array[i].push_long_function();
 					buttons_call_effect_callback();
+					buttons_array[i].push_long_function();
 				}
 			}
 			if(events & event_typ_repeat)
@@ -234,8 +231,8 @@ void buttons_callbacks(void)
 
 				if(buttons_array[i].repeat_function)
 				{
-					buttons_array[i].repeat_function();
 					buttons_call_effect_callback();
+					buttons_array[i].repeat_function();
 				}
 			}
 		}
