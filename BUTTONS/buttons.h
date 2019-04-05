@@ -15,6 +15,8 @@
 // utworzenie typu callbacka od eventu przycisku
 typedef void (button_Callback_type)(void);
 
+typedef void (*button_Callback_type_p)(void);
+
 //! struktura inicjalizacyjna przycisku
 typedef struct BUTTON_settings{
 	uint8_t 	debounce_time_high; // ilosc "tykniec" podczas ktorych musi byc wcisniety, zeby zostal zaliczony jako wcisniety
@@ -23,18 +25,18 @@ typedef struct BUTTON_settings{
 	uint16_t 	repeat_time;		// ilosc "tykniec" podczas ktorych musi byc wcisniety od momentu dlugiego wcisniecia po ktorych wysylany jest event repeat
 
 	// callbacki dla funkcji eventow od przycisku
-	button_Callback_type* push_function;
-	button_Callback_type* push_long_function;
-	button_Callback_type* repeat_function;
-	button_Callback_type* release_function;
+	const button_Callback_type_p push_function;
+	const button_Callback_type_p push_long_function;
+	const button_Callback_type_p repeat_function;
+	const button_Callback_type_p release_function;
 }BUTTON_settings;
 
 //! struktura przechowujaca same callbacki - do ich latwiejszej podmiany
 typedef struct BUTTON_callbacks{
-	button_Callback_type* push_function;
-	button_Callback_type* push_long_function;
-	button_Callback_type* repeat_function;
-	button_Callback_type* release_function;
+	const button_Callback_type_p push_function;
+	const button_Callback_type_p push_long_function;
+	const button_Callback_type_p repeat_function;
+	const button_Callback_type_p release_function;
 }BUTTON_callbacks;
 
 //! callback dla ogolnego efektu od wcisniecia przycisku (ale tylko wtedy, kiedy mamy do wykonania jakas akcje)
@@ -61,17 +63,17 @@ void button_init( uint8_t numer,
 		uint16_t debounce_time_low,
 		uint16_t long_push_time,
 		uint16_t repeat_time,
-		const button_Callback_type* push_function,
-		const button_Callback_type* push_long_function, const
-		const button_Callback_type* repeat_function,
-		const button_Callback_type* release_function );
+		const button_Callback_type_p push_function,
+		const button_Callback_type_p push_long_function, const
+		const button_Callback_type_p repeat_function,
+		const button_Callback_type_p release_function );
 
 //! podmienienie callbackow dla okreslonego przycisku w "starym stylu" dla kompatybilnosci kodow
 void button_change_callbacks(uint8_t numer,
-		const button_Callback_type* push_function,
-		const button_Callback_type* push_long_function,
-		const button_Callback_type* repeat_function,
-		const button_Callback_type* release_function );
+		const button_Callback_type_p push_function,
+		const button_Callback_type_p push_long_function,
+		const button_Callback_type_p repeat_function,
+		const button_Callback_type_p release_function );
 
 //! inicjalizacja pojedynczego przycisku
 void button_init_with_struct(uint8_t numer, const BUTTON_settings *btn);

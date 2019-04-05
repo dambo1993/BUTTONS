@@ -60,10 +60,10 @@ void button_init( uint8_t numer,
 		uint16_t debounce_time_low,
 		uint16_t long_push_time,
 		uint16_t repeat_time,
-		const button_Callback_type* push_function,
-		const button_Callback_type* push_long_function, const
-		const button_Callback_type* repeat_function,
-		const button_Callback_type* release_function )
+		const button_Callback_type_p push_function,
+		const button_Callback_type_p push_long_function, const
+		const button_Callback_type_p repeat_function,
+		const button_Callback_type_p release_function )
 {
 	// variables:
 	buttons_array[numer].debounce_time_high 	= debounce_time_high;
@@ -117,10 +117,10 @@ void button_register_universal_efect_callback(button_effect_callback_t effect)
 }
 
 void button_change_callbacks(uint8_t numer,
-		const button_Callback_type* push_function,
-		const button_Callback_type* push_long_function,
-		const button_Callback_type* repeat_function,
-		const button_Callback_type* release_function )
+		const button_Callback_type_p push_function,
+		const button_Callback_type_p push_long_function,
+		const button_Callback_type_p repeat_function,
+		const button_Callback_type_p release_function )
 {
 	if(numer < BUTTONS_NUMBER)
 	{
